@@ -1,0 +1,66 @@
+# .github/workflows/hugo-gh-pages.yml
+
+name: "GitHub Pages"
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: "bash"
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Setup Hugo"
+        uses: peaceiris/actions-hugo@v3
+        with:
+          # Use the version required by Paige docs or latest extended
+          version: 'latest' # Or specify a version like '0.141.0'
+          extended: true    # <--- IMPORTANT: Use Extended version
+
+      # Dart Sass setup - Paige needs this
+      - name: "Setup Dart Sass"
+        uses: dart-lang/setup-dart@v1 # Official Dart setup includes Sass
+        # No specific 'with' needed for Sass, it's included with Dart SDK
+
+      - name: "Setup Pages"
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: "Download Hugo Modules"
+        run: hugo mod tidy && hugo mod download # Ensures modules are present
+
+      - name: "Build Site"
+        run: hugo --baseURL "${{ steps.pages.outputs.base_url }}/" --environment production --minify # Ensure trailing slash on baseURL
+
+      - name: "Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./public"
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # Correct variable for deploy URL
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
