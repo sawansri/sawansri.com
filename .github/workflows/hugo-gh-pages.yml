@@ -44,7 +44,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: "Download Hugo Modules"
-        run: hugo mod tidy && hugo mod download # Ensures modules are present
+        run: hugo mod tidy && go mod download # Ensures modules are present
 
       - name: "Build Site"
         run: hugo --baseURL "${{ steps.pages.outputs.base_url }}/" --environment production --minify # Ensure trailing slash on baseURL
