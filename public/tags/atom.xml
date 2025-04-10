@@ -1,0 +1,102 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+
+    
+        
+
+        
+            
+        
+    
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed  xml:lang="en-us"  xmlns="http://www.w3.org/2005/Atom">
+    
+        <author>
+            
+                <email>sawan1210@gmail.com, sawan_srivastava@berkeley.edu</email>
+            
+
+            
+                <name>Will Faught</name>
+            
+
+            
+                <uri>https://willfaught.com</uri>
+            
+        </author>
+    
+
+    
+        <icon>http://localhost:1313/favicon.svg</icon>
+    
+
+    
+        <id>tag:localhost:1313,0001-01-01:/tags/atom.xml</id>
+    
+
+    
+        <link href="http://localhost:1313/tags/atom.xml" hreflang="en-us" rel="self" type="application/atom+xml"/>
+    
+
+    
+        
+
+        <link href="http://localhost:1313/tags/atom.xml" hreflang="en-us" rel="alternate" type="application/atom+xml"/>
+    
+        
+
+        <link href="http://localhost:1313/tags/" hreflang="en-us" rel="alternate" type="text/html"/>
+    
+        
+
+        <link href="http://localhost:1313/tags/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+    
+
+    
+
+    
+        <logo>http://localhost:1313/favicon.svg</logo>
+    
+
+    
+        <rights type="html"><![CDATA[© Sawan Srivastava]]></rights>
+    
+
+    
+
+    
+        <title type="html"><![CDATA[Tags · Sawan Srivastava]]></title>
+    
+
+    
+        <updated>0001-01-01T00:00:00Z</updated>
+    
+
+    
+</feed>

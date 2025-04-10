@@ -1,0 +1,127 @@
+baseurl = "https://sawansri.com"
+enablerobotstxt = true
+timezone = "America/Los_Angeles"
+titlecasestyle = "Go"
+
+[[cascade]]
+[cascade._target]
+path = "{/authors,/authors/**}"
+[cascade.build]
+render = "never"
+
+[languages.en]
+copyright = "© Sawan Srivastava"
+languagecode = "en-us"
+languagedirection = "ltr"
+languagename = "English"
+title = "Sawan Srivastava"
+weight = 10
+
+[languages.en.params.paige.site]
+description = '<span style="display: inline-block">Welcome to my corner of the internet!</span>'
+
+[[languages.en.menu.main]]
+identifier = "home"
+name = "Home"
+url = "/"
+weight = 10
+
+[[languages.en.menu.main]]
+identifier = "blog"
+name = "Blog"
+url = "/blog/"
+weight = 20
+
+[[languages.en.menu.main]]
+identifier = "articles"
+name = "Articles"
+url = "/articles/"
+weight = 30
+
+[[languages.en.menu.main]]
+identifier = "categories"
+name = "Categories"
+url = "/categories/"
+weight = 40
+
+[[languages.en.menu.main]]
+identifier = "tags"
+name = "Tags"
+url = "/tags/"
+weight = 50
+
+[[languages.en.menu.main]]
+identifier = "search"
+name = "Search"
+url = "/search/"
+weight = 60
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+noclasses = false
+style = "github"
+
+[[module.imports]]
+path = "github.com/willfaught/paige"
+
+[outputs]
+home = ["atom", "html", "paige-search", "rss"]
+section = ["atom", "html", "rss"]
+taxonomy = ["atom", "html", "rss"]
+term = ["atom", "html", "rss"]
+
+[pagination]
+pagersize = 50
+
+[params.paige.feeds]
+page_link = "✓"
+
+[params.paige.feeds.atom]
+icon = "/favicon.svg"
+logo = "/favicon.svg"
+
+[[params.paige.feeds.atom.authors]]
+email = "sawan1210@gmail.com, sawan_srivastava@berkeley.edu"
+name = "Will Faught"
+url = "https://willfaught.com"
+
+[params.paige.feeds.rss]
+managing_editor = "pushes.kingdom_0e@icloud.com (Will Faught)"
+web_master = "pushes.kingdom_0e@icloud.com (Will Faught)"
+
+[params.paige.pages]
+disable_authors = true
+disable_keywords = true
+disable_next = true
+disable_prev = true
+disable_reading_time = true
+disable_series = true
+disable_toc = true
+disable_word_count = true
+
+[paige.pages.base_schema]
+isAccessibleForFree = true
+
+[params.paige.site]
+disable_breadcrumbs = true
+disable_credit = true
+
+[params.paige.subpages]
+disable_authors = true
+disable_date = true
+disable_keywords = true
+disable_reading_time = true
+disable_series = true
+disable_summary = true
+disable_word_count = true
+
+[permalinks]
+articles = "/:year/:month/:day/:slug/"
+blog = "/:year/:month/:day/:slug/"
+
+[taxonomies]
+author = "authors"
+category = "categories"
+tag = "tags"
