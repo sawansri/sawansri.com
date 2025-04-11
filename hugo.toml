@@ -125,3 +125,7 @@ blog = "/:year/:month/:day/:slug/"
 author = "authors"
 category = "categories"
 tag = "tags"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
