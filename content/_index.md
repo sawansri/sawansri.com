@@ -14,7 +14,7 @@ disable_sections = true
 
 {{< paige/image alt="Landscape" breakpoints=true class="mt-3 object-fit-cover rounded-4 shadow" fetchpriority="high" height="30rem" loading="eager" process="webp" src="sawan-pacifica.jpg" width="100%" >}}
 
-<h1 class="fw-bold text-center" style="margin-top:2rem"><span style="display: inline-block">Hi, there!</span> <span style="display: inline-block">I’m Sawan.</span></h1>
+<h1 class="fw-bold text-center" style="margin-top:2rem"><span style="display: inline-block">Hi there!</span> <span style="display: inline-block">I’m Sawan.</span></h1>
 
 <div class="container-fluid">
     <div class="justify-content-center row">

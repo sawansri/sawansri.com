@@ -33,28 +33,10 @@ url = "/blog/"
 weight = 20
 
 [[languages.en.menu.main]]
-identifier = "articles"
-name = "Articles"
-url = "/articles/"
+identifier = "resume"
+name = "Resume"
+url = "/resume/"
 weight = 30
-
-[[languages.en.menu.main]]
-identifier = "categories"
-name = "Categories"
-url = "/categories/"
-weight = 40
-
-[[languages.en.menu.main]]
-identifier = "tags"
-name = "Tags"
-url = "/tags/"
-weight = 50
-
-[[languages.en.menu.main]]
-identifier = "search"
-name = "Search"
-url = "/search/"
-weight = 60
 
 [markup.goldmark.renderer]
 unsafe = true
