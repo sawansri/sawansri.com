@@ -12,7 +12,18 @@ disable_pages = true
 disable_sections = true
 +++
 
-{{< paige/image alt="Landscape" breakpoints=true class="mt-3 object-fit-cover rounded-4 shadow" fetchpriority="high" height="30rem" loading="eager" process="webp" src="sawan-pacifica.jpg" width="100%" >}}
+
+{{< paige/image alt="Landscape" 
+  src="sawan-pacifica.jpg" 
+  class="mt-3 object-fit-cover rounded-4 shadow"
+  fetchpriority="high"
+  loading="eager"
+  process="webp" 
+  breakpoints="true" 
+  width="100%" 
+  height="auto" 
+  style="max-width: 100%; height: auto; object-fit: cover;" 
+>}}
 
 <h1 class="fw-bold text-center" style="margin-top:2rem"><span style="display: inline-block">Hi there!</span> <span style="display: inline-block">I’m Sawan.</span></h1>
 

@@ -66,12 +66,12 @@ logo = "/favicon.svg"
 
 [[params.paige.feeds.atom.authors]]
 email = "sawan1210@gmail.com, sawan_srivastava@berkeley.edu"
-name = "Will Faught"
-url = "https://willfaught.com"
+name = "Sawan Srivastava"
+url = "https://sawansri.com"
 
-[params.paige.feeds.rss]
-managing_editor = "pushes.kingdom_0e@icloud.com (Will Faught)"
-web_master = "pushes.kingdom_0e@icloud.com (Will Faught)"
+# [params.paige.feeds.rss]
+# managing_editor = "pushes.kingdom_0e@icloud.com (Will Faught)"
+# web_master = "pushes.kingdom_0e@icloud.com (Will Faught)"
 
 [params.paige.pages]
 disable_authors = true
