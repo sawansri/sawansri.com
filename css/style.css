@@ -1,0 +1,226 @@
+:root {
+    --bg-dark: #1A1A1A; /* Dark background for content */
+    --text-light: #F0F0F0; /* Light text for readability */
+    --accent-blue: #007BFF; /* Bright accent for links/buttons */
+    --font-main: 'Inter', sans-serif;
+    --button-bg: #333; /* Background for the 88x31 buttons */
+    --button-border: #555; /* Border for the 88x31 buttons */
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    font-family: var(--font-main);
+    color: var(--text-light);
+    background-color: var(--bg-dark);
+    overflow: hidden; /* Prevent body scroll, content-right will scroll */
+}
+
+/* Main Layout: Vertical Split */
+.main-layout {
+    display: flex;
+    height: 100%;
+}
+
+/* Left Side: Image */
+.image-left {
+    flex: 1; /* Takes up 50% width */
+    /* Updated to use the correct relative path to your image */
+    background-image: url('../images/DSC06951.JPG');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Right Side: Content Area */
+.content-right {
+    flex: 1; /* Takes up 50% width */
+    padding: 2rem 3rem;
+    overflow-y: auto; /* Allows content to scroll within this half */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+
+/* Header & Navigation (floating at the top of the content-right) */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky; /* Sticky header for content-right */
+    top: 0;
+    background-color: var(--bg-dark); /* Ensure it covers content when sticky */
+    z-index: 10;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--accent-blue);
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.main-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.3s ease; /* Simple fade hover */
+}
+
+.main-nav a:hover {
+    color: var(--accent-blue);
+}
+
+/* Content Sections */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    padding-top: 1rem; /* For spacing below header/above sections */
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+/* 88x31 Button Grid */
+.button-grid-section {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.button-grid-section h2 {
+    margin-bottom: 1.5rem;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); /* Auto-fill with 88px buttons */
+    gap: 10px; /* Space between buttons */
+    justify-content: start; /* Align buttons to the start */
+    width: 100%; /* Ensure grid stretches */
+}
+
+.button-88x31 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 88px;
+    height: 31px;
+    background-color: var(--button-bg);
+    border: 1px solid var(--button-border);
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.7rem; /* Smaller font for classic look */
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap; /* Keep text on one line */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis if text is too long */
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.button-88x31:hover {
+    transform: scale(1.05);
+    background-color: var(--accent-blue);
+    border-color: var(--text-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column; /* Stack image and content vertically on small screens */
+    }
+    .image-left {
+        min-height: 50vh; /* Image takes top half */
+    }
+    .content-right {
+        padding: 1.5rem;
+        flex: none; /* Don't grow, just take content height */
+        height: auto; /* Allow content to dictate height */
+        overflow-y: visible;
+    }
+
+    body, html {
+        overflow: auto; /* Allow body to scroll on mobile */
+    }
+}
+
+
+/* Blog Index Page Styles */
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.post-preview {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.post-preview:last-child {
+    border-bottom: none;
+}
+.post-preview h3 a {
+    font-size: 1.75rem;
+    color: var(--text-light);
+}
+.post-preview h3 a:hover {
+    color: var(--accent-blue);
+}
+.post-meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Single Post Page Styles */
+.post-title {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+.post-content {
+    margin-top: 2rem;
+}
+.post-content p {
+    margin-bottom: 1rem;
+}
+.post-content h1, .post-content h2, .post-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.post-content ul, .post-content ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 3rem;
+}
