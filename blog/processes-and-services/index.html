@@ -103,6 +103,12 @@
                     
                     <h2>Managing Services with systemd</h2>
                     <p>On modern Linux systems, services are managed by an init system, most commonly <strong>systemd</strong>. The primary tool for interacting with systemd is the <code>systemctl</code> command.</p>
+
+			<h3>Systemd Unit Files</h3>
+			<p>Service behavior defined by systemd unit files
+			How should this service start up? How should it respond to various systemctl management commands?
+</p>
+						<img src="images/service.png"></img>
                     
                     <h3>Essential `systemctl` Commands</h3>
                     <p>You can control any service managed by systemd with these commands:</p>
@@ -113,6 +119,7 @@
                         <li><code>systemctl restart [name]</code>: Restarts a service.</li>
                         <li><code>systemctl enable [name]</code>: Sets a service to start automatically on boot.</li>
                         <li><code>systemctl disable [name]</code>: Prevents a service from starting on boot.</li>
+                        <li><code>systemctl reload [name]</code>: Reload a service’s configuration.</li>
                     </ul>
                 </div>
             </article>
