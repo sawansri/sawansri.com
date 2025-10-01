@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <header class="main-header">
-            <div class="logo"><a href="/index.html">Sawan Srivastava</a></div>
+            <div class="logo"><a href="/">Sawan Srivastava</a></div>
             <nav class="main-nav">
                 <ul>
                     <li><a href="/index.html">Home</a></li>
@@ -24,60 +24,95 @@
                 <h1 class="post-title">An Introduction to Services and Processes in Linux</h1>
                 <p class="post-meta">September 30, 2025</p>
                 <div class="post-content">
-                    [cite_start]<p>This post covers the fundamentals of services and processes in Linux, based on a lecture from the OCF Linux SysAdmin DeCal[cite: 1, 2]. [cite_start]The main goal is to help you become a more productive Linux user, not a kernel hacker[cite: 23].</p>
+                    <p>This post covers the fundamentals of services and processes in Linux as covered in Lecture 4 of the OCF Linux SysAdmin DeCal. The main goal is to help you become a more productive Linux user, not a kernel hacker.</p>
 
                     <hr>
 
                     <h2>Understanding Processes</h2>
-                    [cite_start]<p>A process is a single instance of a running program[cite: 27]. [cite_start]Processes are isolated from one another, each having its own memory and threads[cite: 28].</p>
-                    
+                    <p>A process is a single instance of a running program. Processes are isolated from one another, each having its own memory and threads.</p>
+
+		    <h3>Processes vs. Threads</h3>
+			<p>A process has one or more threads.</p>
+			<p>Processes have their own data and code, must use pipes, files, etc. to communicate with one another.
+			Threads share the same process but have different system states (“multithreaded process”)</p>
+						<img src="images/thread.png"></img>
                     <h3>What Defines a Process?</h3>
-                    [cite_start]<p>Every process has several key identifiers and components[cite: 37]:</p>
-                    <ul>
-                        [cite_start]<li><strong>PID:</strong> A unique Process ID[cite: 32].</li>
-                        [cite_start]<li><strong>PPID:</strong> The Parent's Process ID[cite: 33].</li>
-                        [cite_start]<li><strong>UID:</strong> The ID of the user running the process[cite: 34].</li>
-                        [cite_start]<li><strong>Executable:</strong> The program that the process is running[cite: 35].</li>
+                    <p>Every process has several key identifiers and components:</p>
+                    <ul class="indent-list">
+                        <li><strong>PID:</strong> A unique Process ID.</li>
+                        <li><strong>PPID:</strong> The Parent's Process ID.</li>
+                        <li><strong>UID:</strong> The ID of the user running the process.</li>
+                        <li><strong>Executable:</strong> The program that the process is running.</li>
+                        <li><strong>Args:</strong> The arguments (command line) of the process (and more...)</li>
                     </ul>
-                    [cite_start]<p>All processes are started by a parent process, with the exception of the very first one: the <strong>init process</strong>[cite: 78, 79]. [cite_start]This process is started at boot, is assigned PID 1, and serves as the ancestor for all other processes on the system[cite: 40, 41].</p>
+                    <p>All processes are started by a parent process, with the exception of the very first one: the <strong>init process</strong>. This process is started at boot, is assigned PID 1, and serves as the ancestor for all other processes on the system.</p>
+
+						<img src="images/htop_tree.png"></img>
 
                     <h3>Process Creation: The `fork()` and `exec()` System Calls</h3>
-                    [cite_start]<p>A new process is created when an existing process calls `fork()`[cite: 137]. [cite_start]This creates two processes, a parent and a child, which are nearly identical[cite: 137]. [cite_start]The parent keeps its PID, while the child receives a new one[cite: 138]. [cite_start]The child process can then optionally call `exec()` to replace its own program with a new one[cite: 139].</p>
-
+                    <p>A new process is created when an existing process calls `fork()`. This creates two processes, a parent and a child, which are nearly identical. The parent keeps its PID, while the child receives a new one. The child process can then optionally call `exec()` to replace its own program with a new one.</p>
+						<img src="images/fork.png"></img>
+						<br><br>
+						<h3>How many henlo's get printed?</h3>
+						<br><br>
+						<img src="images/henlo_fork.png"></img>
                     <h3>The Process Lifecycle: Zombies and Orphans</h3>
-                    [cite_start]<p>When a child process terminates, it becomes a <strong>zombie process</strong>[cite: 224]. [cite_start]Its metadata remains in the process table so its parent can read its exit status[cite: 225]. [cite_start]The parent is responsible for "reaping" the zombie by calling the `wait()` system call[cite: 270]. [cite_start]If a long-running parent process fails to do this, it can cause a resource leak as zombies accumulate[cite: 313, 314, 316].</p>
-                    [cite_start]<p>If a parent process exits before its child, the child becomes an <strong>orphan process</strong>[cite: 307]. [cite_start]Orphaned processes are immediately adopted by the init process (PID 1), which automatically reaps them when they exit, preventing them from becoming permanent zombies[cite: 307, 308].</p>
+                    <p>When a child process terminates, it becomes a <strong>zombie process</strong>. Its metadata remains in the process table so its parent can read its exit status. The parent is responsible for "reaping" the zombie by calling the `wait()` system call. If a long-running parent process fails to do this, it can cause a resource leak as zombies accumulate.</p>
+						<img src="images/zombie.png"></img>
+                    <p>If a parent process exits before its child, the child becomes an <strong>orphan process</strong>. Orphaned processes are immediately adopted by the init process (PID 1), which automatically reaps them when they exit, preventing them from becoming permanent zombies.</p>
+						<img src="images/re-init.png"></img>
+
+		<br><br>
+			<h3>Communication</h3>
+			<h4>Inter-Process Communication</h4>
+			<ul class="indent-list">
+				<li>Exit codes</li>
+				<li>Signals (e.g. SIGTERM, SIGKILL, SIGINT)</li>
+				<li>Pipes (STDIN, STDOUT, STDERR)</li>
+				<li>Sockets (UNIX socket, IP socket)</li>
+				<li>Message Bus (e.g. dbus on Linux)</li>
+				<li>and many more...</li>
+							</ul>
+<h4>Process Signals</h4>
+			<ul class="indent-list">
+				<li>SIGTERM: tell a process to exit now</li>
+				<li>SIGKILL: terminate process immediately</li>
+				<li>SIGINT: interrupt, when you press Ctrl+C</li>
+				<li>SIGHUP: the user closes the terminal window</li>
+				<li>SIGWINCH: terminal window resized</li>
+				<li>SIGSTOP / SIGCONT: stop/resume</li>
+							</ul>
 
                     <h3>Job Control in the Shell</h3>
-                    <p>Job control allows you to manage processes running in your shell. [cite_start]A <strong>foreground process</strong> is one attached to your shell, like an open editor or a script you're running[cite: 352]. [cite_start]A <strong>background process</strong> runs without user interaction and does not block the terminal[cite: 353].</p>
-                    [cite_start]<p>You can manage these jobs with a few key commands[cite: 357]:</p>
-                    <ul>
-                        [cite_start]<li><strong>Ctrl+Z</strong>: Suspends the currently running foreground process by sending it a `SIGTSTP` signal[cite: 357].</li>
-                        [cite_start]<li><strong>`jobs`</strong>: Lists the current jobs (suspended or in the background)[cite: 357].</li>
-                        [cite_start]<li><strong>`fg %jobid`</strong>: Brings a suspended or background job to the foreground[cite: 357].</li>
-                        [cite_start]<li><strong>`bg %jobid`</strong>: Resumes a suspended job in the background[cite: 357].</li>
-                        [cite_start]<li><strong>`command &`</strong>: Starts a command directly in the background[cite: 357].</li>
+                    <p>Job control allows you to manage processes running in your shell. A <strong>foreground process</strong> is one attached to your shell, like an open editor or a script you're running. A <strong>background process</strong> runs without user interaction and does not block the terminal.</p>
+                    <p>You can manage these jobs with a few key commands:</p>
+                    <ul class="indent-list">
+                        <li><strong>Ctrl+Z</strong>: Suspends the currently running foreground process by sending it a `SIGTSTP` signal.</li>
+                        <li><strong>`jobs`</strong>: Lists the current jobs (suspended or in the background).</li>
+                        <li><strong>`fg %jobid`</strong>: Brings a suspended or background job to the foreground.</li>
+                        <li><strong>`bg %jobid`</strong>: Resumes a suspended job in the background.</li>
+                        <li><strong>`command &`</strong>: Starts a command directly in the background.</li>
                     </ul>
 
                     <hr>
 
                     <h2>Services and Daemons</h2>
-                    [cite_start]<p>A service is a special type of process known as a <strong>daemon</strong>[cite: 361]. [cite_start]A daemon is a non-interactive background process designed to run for long periods[cite: 362, 367]. [cite_start]They are crucial for tasks like serving web pages (<code>nginx</code>), handling remote logins (<code>sshd</code>), or logging system events (<code>rsyslogd</code>)[cite: 363, 368].</p>
+                    <p>A service is a special type of process known as a <strong>daemon</strong>. A daemon is a non-interactive background process designed to run for long periods. They are crucial for tasks like serving web pages (<code>nginx</code>), handling remote logins (<code>sshd</code>), or logging system events (<code>rsyslogd</code>).</p>
 
                     <hr>
                     
                     <h2>Managing Services with systemd</h2>
-                    [cite_start]<p>On modern Linux systems, services are managed by an init system, most commonly <strong>systemd</strong>[cite: 374]. [cite_start]The primary tool for interacting with systemd is the <code>systemctl</code> command[cite: 375].</p>
+                    <p>On modern Linux systems, services are managed by an init system, most commonly <strong>systemd</strong>. The primary tool for interacting with systemd is the <code>systemctl</code> command.</p>
                     
                     <h3>Essential `systemctl` Commands</h3>
                     <p>You can control any service managed by systemd with these commands:</p>
-                    <ul>
-                        [cite_start]<li><code>systemctl status [name]</code>: Check the detailed status of a service[cite: 408].</li>
-                        [cite_start]<li><code>systemctl start [name]</code>: Starts a service[cite: 418].</li>
-                        [cite_start]<li><code>systemctl stop [name]</code>: Stops a service[cite: 418].</li>
-                        [cite_start]<li><code>systemctl restart [name]</code>: Restarts a service[cite: 419].</li>
-                        [cite_start]<li><code>systemctl enable [name]</code>: Sets a service to start automatically on boot[cite: 422].</li>
-                        [cite_start]<li><code>systemctl disable [name]</code>: Prevents a service from starting on boot[cite: 423].</li>
+                    <ul class="indent-list">
+                        <li><code>systemctl status [name]</code>: Check the detailed status of a service.</li>
+                        <li><code>systemctl start [name]</code>: Starts a service.</li>
+                        <li><code>systemctl stop [name]</code>: Stops a service.</li>
+                        <li><code>systemctl restart [name]</code>: Restarts a service.</li>
+                        <li><code>systemctl enable [name]</code>: Sets a service to start automatically on boot.</li>
+                        <li><code>systemctl disable [name]</code>: Prevents a service from starting on boot.</li>
                     </ul>
                 </div>
             </article>
