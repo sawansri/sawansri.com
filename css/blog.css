@@ -93,3 +93,8 @@ a:hover {
 .indent-list {
   padding-left: 40px; /* Adjust the value as needed */
 }
+
+.pdf-viewer {
+    border: none;
+    margin-top: 1rem;
+}
