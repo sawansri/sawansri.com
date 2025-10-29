@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version Control and Backups: A Comprehensive Guide | Sawan Srivastava</title>
+    <link rel="stylesheet" href="../../css/blog.css"> 
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="logo"><a href="/">Sawan Srivastava</a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/index.html#resume">Resume</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <article class="post-full">
+                <h1 class="post-title">Version Control and Backups: A Comprehensive Guide</h1>
+                <p class="post-meta">October 29, 2025</p>
+                <div class="post-content">
+                    <p>This post explores the fundamentals of version control systems and backup strategies as covered in Lecture 8 of the OCF Linux SysAdmin DeCal. Understanding these concepts is crucial for any developer or system administrator looking to maintain code integrity and data safety.</p>
+
+                    <hr>
+
+                    <h2>Why Version Control?</h2>
+                    <p>Version Control Systems (VCS) are essential tools in modern software development for several key reasons:</p>
+                    <ul class="indent-list">
+                        <li><strong>Track changes:</strong> Monitor modifications to code over time.</li>
+                        <li><strong>Collaboration:</strong> Work with others without worrying too much about conflicting changes.</li>
+                        <li><strong>Safe experimentation:</strong> Create and test features without breaking production code.</li>
+                    </ul>
+                    <p>Examples of VCS include Git, Mercurial, Subversion, Perforce, and Bazaar. Git has become the modern-day standard, and it's important to note: <strong>Git is not GitHub!</strong> Git is the version control system itself, while GitHub is a cloud-based hosting service for Git repositories.</p>
+
+                    <h3>About Git</h3>
+                    <p>Git is a free and open-source system created by Linus Torvalds in 2005 for development of the Linux kernel. After their previous proprietary VCS (Bitkeeper) withdrew the free version, Torvalds built the first implementation in just 2-3 months.</p>
+                    <p>Fun fact: "Git" is also British slang meaning "unpleasant person." Torvalds has said: <em>"I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'Git'."</em></p>
+
+                    <hr>
+
+                    <h2>What Makes Git Special?</h2>
+
+                    <h3>Git Stores Snapshots</h3>
+                    <p>Git stores snapshots (versions) of files and directory structure, keeping track of relationships, authors, dates, and log messages.</p>
+
+                    <h3>Git Has Integrity</h3>
+                    <p>Git hashes objects with SHA1, making it impossible to change anything without Git knowing. This protects against:</p>
+                    <ul class="indent-list">
+                        <li>Lost information in transit</li>
+                        <li>File corruption</li>
+                    </ul>
+
+                    <h3>Git is Very Fast</h3>
+                    <p>Nearly every operation is local with no network latency overhead. Browsing project history involves Git reading directly from your local database. This means you can work offline.</p>
+
+                    <h3>Distributed Architecture</h3>
+                    <p>There can be many copies of a given repository, each supporting independent development, with machinery to transmit and reconcile versions between repositories.</p>
+
+                    <hr>
+
+                    <h2>Git Internals</h2>
+                    <p>Git represents project history as a <strong>directed acyclic graph (DAG)</strong> of commit nodes. Nodes point one-way to the state they're based on, and there are no cycles.</p>
+                    
+                    <h3>Key Components</h3>
+                    <ul class="indent-list">
+                        <li><strong>Commits:</strong> Correspond to project state's tree (snapshots).</li>
+                        <li><strong>Blobs:</strong> Files stored as "blobs" of bits.</li>
+                        <li><strong>Trees:</strong> Folders containing blobs and/or other trees.</li>
+                        <li><strong>Branches:</strong> Pointers to the head of a line of work. Default name is <code>master</code> or <code>main</code>.</li>
+                        <li><strong>HEAD:</strong> A pointer to the local branch you're currently on.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>File States in Git</h2>
+                    <p>Understanding file states is crucial for working with Git:</p>
+
+                    <h3>Modified</h3>
+                    <p>File is changed but isn't committed to your database (repository) yet.</p>
+
+                    <h3>Staged</h3>
+                    <p>Modified file is marked in its current version to be included in the next commit snapshot.</p>
+
+                    <h3>Tracked vs. Untracked</h3>
+                    <ul class="indent-list">
+                        <li><strong>Tracked files:</strong> Files git knows about (from last snapshot + newly staged files). Can be unmodified, modified, or staged.</li>
+                        <li><strong>Untracked files:</strong> Everything else. Use <code>.gitignore</code> to specify intentionally untracked files to ignore.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Getting Started with Git</h2>
+
+                    <h3>Creating a Repository</h3>
+                    <p>For an existing project in directory <code>proj/</code>:</p>
+                    <pre><code>cd proj/
+git init</code></pre>
+                    <p>This creates a new subdirectory <code>.git</code> making <code>proj/</code> a Git repository.</p>
+
+                    <h3>Cloning an Existing Repository</h3>
+                    <pre><code>git clone &lt;repo URL&gt; [destination]</code></pre>
+                    <p>This creates a directory, initializes a <code>.git</code> directory inside it, and pulls down all data from the repository.</p>
+                    <pre><code>git clone https://github.com/0xcf/decal-labs</code></pre>
+
+                    <hr>
+
+                    <h2>Branching: Git's Killer Feature</h2>
+                    <p>Branching is what sets Git apart from other version control systems. The idea is to create a new 'branch' with the current branch as the 'trunk'. This creates a new pointer at the same location as HEAD. Every time you commit, the pointer of the active branch moves forward automatically.</p>
+
+                    <h3>Basic Branch Commands</h3>
+                    <ul class="indent-list">
+                        <li><code>git branch &lt;name&gt;</code>: Create a new branch</li>
+                        <li><code>git checkout &lt;name&gt;</code>: Switch to a branch</li>
+                        <li><code>git checkout -b &lt;name&gt;</code>: Create and switch to a new branch</li>
+                        <li><code>git branch -d &lt;name&gt;</code>: Delete a branch</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Merging</h2>
+                    <p>The idea is to combine a branch back into the mainline/trunk with a merge commit. For example, if you have branch <code>iss53</code> (issue #53) and are ready to merge it into the main codebase:</p>
+                    <pre><code>git checkout master
+git merge iss53
+git branch -d iss53</code></pre>
+                    <p>This changes HEAD to point to master, creates a merge commit combining both branches, and deletes the branch <code>iss53</code>.</p>
+
+                    <h3>Merge Conflicts</h3>
+                    <p>If the same part of the same file is different in the two branches you're merging, Git won't be able to merge them cleanly and will throw a merge conflict. Files with conflicts will go unmerged, and Git adds conflict-resolution markers:</p>
+                    <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+[Lines of code from HEAD (i.e master)]
+=======
+[Lines of code from the merge target (i.e iss53)]
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; [Commit message]</code></pre>
+                    <p>Use <code>git status</code> to see which files conflict, edit them to resolve conflicts, then <code>git add</code> each file to mark it as resolved, and <code>git commit</code> to finalize the merge.</p>
+
+                    <hr>
+
+                    <h2>Rebasing</h2>
+                    <p>The idea is to take all commits from a branch and apply them on top of HEAD with no merge commit, as if you just made all the commits on the main branch anyways (linear history).</p>
+                    <pre><code>git checkout experiment
+git rebase master
+git checkout master
+git merge experiment</code></pre>
+                    <p><strong>Note:</strong> Rebase re-writes history. Best used in private branches.</p>
+
+                    <hr>
+
+                    <h2>Working with Remotes</h2>
+                    <p>The remote is the offsite copy of the repository. <code>origin</code> is the default name for a remote when you run <code>git clone</code>. Remote branch names take the form <code>&lt;remote&gt;/&lt;branch&gt;</code>.</p>
+
+                    <h3>Essential Remote Commands</h3>
+                    <ul class="indent-list">
+                        <li><code>git remote -v</code>: View all remotes and their URLs</li>
+                        <li><code>git remote show &lt;remote&gt;</code>: Show information about a remote</li>
+                        <li><code>git fetch &lt;remote&gt;</code>: Fetch new data from remote and update local database without modifying working directory</li>
+                        <li><code>git pull [remote/branch]</code>: Equivalent to <code>git fetch && git merge</code></li>
+                        <li><code>git push &lt;remote&gt; &lt;branch&gt;</code>: Push local commits to remote/branch</li>
+                    </ul>
+                    <p><strong>Good practice:</strong> Pull before you push to avoid conflicts.</p>
+
+                    <hr>
+
+                    <h2>The Git Workflow</h2>
+                    <p>Here's a typical workflow for working with Git:</p>
+                    <pre><code>git checkout master
+git checkout -b feature
+[Modify files]
+git add file-changed-1 [...] file-changed-n
+git commit -m "description of changes"
+git push origin feature
+git checkout master
+git pull origin master
+git merge feature
+git push origin master</code></pre>
+
+                    <hr>
+
+                    <h2>Backups: Just Do It</h2>
+                    <p>According to Murphy's law: "Anything that can go wrong will go wrong." You need backups to protect against:</p>
+                    <ul class="indent-list">
+                        <li>Accidental or malicious deletion</li>
+                        <li>Device failure</li>
+                        <li>Software failure</li>
+                        <li>Theft</li>
+                    </ul>
+                    <p><strong>Important considerations:</strong></p>
+                    <ul class="indent-list">
+                        <li>Automate backups because you will forget</li>
+                        <li>Don't leak information! Backups must be secure</li>
+                        <li>Make sure your backups actually work by routinely testing backup and recovery procedures</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>The 3-2-1 Rule</h2>
+                    <p>Follow this simple rule to ensure data safety:</p>
+                    <ul class="indent-list">
+                        <li><strong>3:</strong> Have at least 3 copies of your data</li>
+                        <li><strong>2:</strong> Store your data on at least 2 different media (e.g., 1 hard drive, 1 backup server)</li>
+                        <li><strong>1:</strong> Have at least 1 copy of your data off-site (e.g., on Amazon S3, "the cloud")</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>The GitLab Database Outage: A Cautionary Tale</h2>
+                    <p>On January 31, 2017, GitLab suffered a major database outage that serves as an important lesson on the importance of backups.</p>
+
+                    <h3>What Happened</h3>
+                    <p>An engineer accidentally ran <code>rm -rf</code> on their production PostgreSQL database. They noticed and stopped it after 1 second, but 300GB of production data was lost. This shouldn't have been catastrophic—they could just recover from a backup, right?</p>
+
+                    <h3>Backup 1: Amazon S3</h3>
+                    <p>GitLab had an automated process to upload a backup to Amazon S3 every 24 hours. However, their backups had been failing for weeks due to a version mismatch, and their notification system was broken too.</p>
+
+                    <h3>Backup 2: Azure Disk Snapshots</h3>
+                    <p>GitLab had enabled Azure disk snapshots to run every 24 hours... except on the database servers, because they thought they had enough backups.</p>
+
+                    <h3>Hail Mary: LVM Snapshots</h3>
+                    <p>LVM (Logical Volume Manager) snapshots weren't meant to be a backup, but luckily they had these. An engineer had run the copy from prod to staging ~6 hours before the incident. Unfortunately, it took GitLab 18 hours to recover since staging was not meant for data recovery (different region and slow disks).</p>
+
+                    <h3>Impact</h3>
+                    <p>GitLab estimated they lost at least 5,000 projects, 5,000 comments, and roughly 700 users. The incident became both a feel-good story of transparency and not firing the engineer involved, but also a cautionary tale about backup failures.</p>
+                    <p><strong>The lesson:</strong> The importance of keeping backups, making sure they work, and practicing recovering from them.</p>
+
+                    <hr>
+
+                    <h2>Tools for Backups</h2>
+
+                    <h3>rsync</h3>
+                    <p>Simple command-line utility for local ↔ remote transfer. Skips copying files that are the same at the destination, making it ideal for backups. Uses SSH for transferring to remote hosts.</p>
+                    <pre><code>rsync -av -P [source] user@host:[destination]</code></pre>
+                    <p>The <code>-a</code> flag enables archive mode (recursion and preserve file permissions).</p>
+
+                    <h3>rclone</h3>
+                    <p>Described as "rsync for cloud storage," rclone supports every major cloud storage provider and can mount cloud storage as a local filesystem.</p>
+                    <pre><code>rclone sync source:path dest:path</code></pre>
+
+                    <hr>
+
+                    <h2>Additional Resources</h2>
+                    <ul class="indent-list">
+                        <li><strong>Pro Git</strong> (git-scm.com) — The bible for Git. Chapters 1-5 form a good foundation.</li>
+                        <li><strong>Oh Shit, Git!?!</strong> (ohshitgit.com) — "Git is hard: screwing up is easy, and figuring out how to fix your mistakes is fucking impossible." Short guide on how to recover from common Git mistakes.</li>
+                        <li><strong>Shell/Editor integration</strong> — Tools like vim-fugitive can enhance your Git workflow.</li>
+                    </ul>
+                </div>
+            </article>
+            <a href="/blog" class="back-link">← All Posts</a>
+        </main>
+    </div>
+</body>
+</html>
