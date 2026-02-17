@@ -35,6 +35,11 @@
             margin: 15px 0;
             font-style: italic;
         }
+	.center {
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	}
     </style>
 </head>
 
@@ -104,15 +109,17 @@
 
                     <img src="images/owui_conf.png" alt="Screenshot of Open WebUI connection settings">
 
-                    <h3>Step 3: The "God Mode" Dashboard Plugin</h3>
+                    <h3>Step 3: The Lemonade Control Panel Plugin</h3>
 
                     <p>This was the missing piece. I didn't want to SSH into my server to check if a model was loaded or to see my NPU usage stats. I wanted to control the server directly from the chat interface.</p>
 
-                    <p>I wrote a Python action for Open WebUI called <strong>Lemonade Control Panel</strong>. It gives you a visual dashboard of your server's health, token speeds, and loaded models. It even lets you <code>pull</code> or <code>delete</code> models via chat commands.</p>
+                    <p>I wrote a plugin for Open WebUI called <strong>Lemonade Control Panel</strong>. It gives you a visual dashboard of your server's health, token speeds, and loaded models. It even lets you <code>pull</code> or <code>delete</code> models via chat commands.</p>
 
-                    <img src="path/to/placeholder_dashboard_screenshot.png" alt="Screenshot of the Lemonade Control Panel Dashboard with gauges and stats">
+                    <img src="images/lemonade-dashboard.png" alt="Screenshot of the Lemonade Control Panel Dashboard with gauges and stats" class="center">
 
-                    <p>To install it, go to <strong>Workspace > Functions</strong> in Open WebUI, create a new function, and paste this code:</p>
+                    <p>To install it, go to https://openwebui.com/posts/lemonade_control_panel_a5ee89f2, click on "Get", then on "Save". After you have successfully imported the plugin, be sure to enable it in the "Functions" setting. :</p>
+
+                    <img src="images/enable-plugin.png" alt="Screenshot of the process of enabling lemonade control panel plugin" class="center">
 
                     
                     <h3>Step 4: Going House-Wide</h3>
