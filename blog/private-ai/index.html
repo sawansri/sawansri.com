@@ -58,7 +58,7 @@
                 <div class="post-content">
                     <p>It's not a big secret that AI Labs train their foundational models on your personal chat sessions. While they strip PII (Personally Identifiable Information), your habits and curiosities ultimately become weights in a matrix somewhere in a data center.</p>
 
-                    <p>Beyond the privacy aspect, there is the ecosystem fragmentation. If you want to run local AI, you usually need Ollama for text, Automatic1111 for images, and something else for voice. You end up managing three different services and fighting port conflicts/pesky endpoint setup.</p>
+                    <p>Beyond the privacy aspect, there is ecosystem fragmentation. If you want to run local AI, you usually need Ollama for text, Automatic1111 for images, and something else for voice. You end up managing three different services and fighting port conflicts/pesky endpoint setup.</p>
 
                     <p>For my LAN setup, I wanted a <strong>single, unified stack</strong> that offers:</p>
                     
@@ -68,18 +68,20 @@
                         <li><strong>Family Access:</strong> Accessible from any phone or laptop in the house.</li>
                     </ul>
 
-                    <p>Here is how I built it using <strong>Lemonade</strong>, <strong>Open WebUI</strong>, and a custom dashboard plugin I wrote to tie it all together.</p>
+		    <br>
+
+			<h2>Here is how I built it using <strong>Lemonade</strong>, <strong>Open WebUI</strong>, and <strong>Lemonade Control Panel</strong> (an Open WebUI plugin) to tie it all together.</h2>
 
                     <img src="images/lemonade-architecture.png" alt="Diagram showing Lemonade Server connecting to Open WebUI and Mobile Apps">
 
-                    <h2>Step 1: The Backend (Lemonade)</h2>
+                    <h3>Step 1: The Backend (Lemonade)</h3>
 
                     <p>Lemonade is the inference engine. It's unique because it supports LLMs, Stable Diffusion, and Whisper (voice) out of the box, optimized for NPUs (like the Ryzen AI series) and GPUs. It recently added full Ollama endpoint compatibility, which makes it incredibly flexible.</p>
 
                     <p>To make this work house-wide, we can't just run it on <code>localhost</code>. We need to bind it to all network interfaces so other devices can see it.</p>
 
                     <p><strong>The Setup:</strong></p>
-                    <ol>
+                    <ol class="indent-list">
                         <li>Install Lemonade (via the installer or CLI).</li>
                         <li>Run the server with the host flag set to <code>0.0.0.0</code>:</li>
                     </ol>
@@ -88,7 +90,7 @@
 
                     <p class="note"><strong>Note:</strong> On Windows, you may get a firewall prompt. Make sure to allow access for Private Networks so your phone can talk to your PC.</p>
 
-                    <h2>Step 2: The Frontend (Open WebUI)</h2>
+                    <h3>Step 2: The Frontend (Open WebUI)</h3>
 
                     <p>Open WebUI is the best interface out there. It looks and feels exactly like ChatGPT, supports user accounts, and handles history beautifully. We'll run this via Docker.</p>
 
@@ -98,12 +100,11 @@
                     <ol class="indent-list">
                         <li>Go to <strong>Settings > Admin Settings > Connections</strong>.</li>
                         <li>Set the OpenAI API URL to <code>http://host.docker.internal:8000/api/v1</code>.</li>
-                        <li>Set the Image Gen URL to the same endpoint (Lemonade handles both!).</li>
                     </ol>
 
-                    <img src="path/to/placeholder_settings_screenshot.png" alt="Screenshot of Open WebUI connection settings">
+                    <img src="images/owui_conf.png" alt="Screenshot of Open WebUI connection settings">
 
-                    <h2>Step 3: The "God Mode" Dashboard Plugin</h2>
+                    <h3>Step 3: The "God Mode" Dashboard Plugin</h3>
 
                     <p>This was the missing piece. I didn't want to SSH into my server to check if a model was loaded or to see my NPU usage stats. I wanted to control the server directly from the chat interface.</p>
 
@@ -114,15 +115,15 @@
                     <p>To install it, go to <strong>Workspace > Functions</strong> in Open WebUI, create a new function, and paste this code:</p>
 
                     
-                    <h2>Step 4: Going House-Wide</h2>
+                    <h3>Step 4: Going House-Wide</h3>
 
                     <p>Now that the server is up and running on <code>0.0.0.0</code>, you have two great options for accessing this from your phone or tablet.</p>
 
                     <p>First, you need to find your server's Local IP Address (e.g., <code>192.168.1.50</code>).</p>
 
-                    <h3>Option A: The Native App Experience (Recommended)</h3>
+                    <h4>Option A: The Native App Experience (Recommended)</h4>
                     <p>If you prefer a native feel, you can use the official Lemonade apps. They connect directly to the backend, skipping Open WebUI entirely while still giving you access to all the models you've pulled.</p>
-                    <ol>
+                    <ol class="indent-list">
                         <li>Download the <strong>Lemonade</strong> app for iOS or Android.</li>
                         <li>In the settings, set the endpoint to: <code>http://YOUR_LOCAL_IP:8000</code></li>
                         <li>Start chatting.</li>
@@ -130,7 +131,7 @@
 
                     <h3>Option B: Open WebUI on Mobile</h3>
                     <p>If you want the full experience—including user history, the admin dashboard, and image generation settings—use the browser.</p>
-                    <ol>
+                    <ol class="indent-list">
                         <li>Open Chrome/Safari on your phone.</li>
                         <li>Navigate to: <code>http://YOUR_LOCAL_IP:3000</code></li>
                         <li><strong>Tip:</strong> Use "Add to Home Screen" on iOS to make it look like a full app.</li>
