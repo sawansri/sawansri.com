@@ -105,7 +105,7 @@
 
                     <p>Open WebUI is the best interface out there. It looks and feels exactly like ChatGPT, supports user accounts, and handles history beautifully.</p>
                     
-                    <p>While Open WebUI supports various installation methods, including Python <code>uv</code>, building from source, and Kubernetes Helm charts—we will use <strong>Docker</strong> for this guide as it's the cleanest way to get started without polluting your system dependencies.</p>
+                    <p>While Open WebUI supports various installation methods, including Python <code>uv</code>, building from source, and Kubernetes Helm charts, we will use <strong>Docker</strong> for this guide as it's the cleanest way to get started without polluting your system dependencies.</p>
 
                     <pre><code>docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main</code></pre>
 
@@ -113,7 +113,7 @@
 
                     <h4>Option A: The Ollama Connection (Recommended for Management)</h4>
                     <p>Since Open WebUI supports the Ollama API natively, and Lemonade now supports it too, you can connect them to unlock full model management features.</p>
-                    <p>By selecting this option, you can use the native <strong>Settings > Models</strong> interface in Open WebUI to search, pull, and delete models installed on your Lemonade server—just like you would with a standard Ollama instance.</p>
+                    <p>By selecting this option, you can use the native <strong>Settings > Models</strong> interface in Open WebUI to search, pull, and delete models installed on your Lemonade server just like you would with a standard Ollama instance.</p>
                     <ol class="indent-list">
                         <li>Go to <strong>Settings > Admin Settings > Connections > Ollama</strong>.</li>
                         <li>Set the Ollama API URL to <code>http://host.docker.internal:11434</code>.</li>
@@ -163,7 +163,7 @@
                     </ol>
 
                     <h3>Option B: Open WebUI on Mobile</h3>
-                    <p>If you want the full experience—including user history, the admin dashboard, and image generation settings—use the browser.</p>
+                    <p>If you want the full experience, including user history, the admin dashboard, and image generation settings, use the browser.</p>
                     <ol class="indent-list">
                         <li>Open Chrome/Safari on your phone.</li>
                         <li>Navigate to: <code>http://YOUR_LOCAL_IP:3000</code></li>
