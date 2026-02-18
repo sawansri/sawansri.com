@@ -7,26 +7,27 @@
     <link rel="stylesheet" href="../../css/blog.css"> 
     <style>
         pre {
-            background: #f4f4f4;
+            background: #1e1e1e;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
             font-size: 0.9em;
-            border: 1px solid #ddd;
+            border: 1px solid #333;
+            color: #dcdcdc;
         }
         code {
             font-family: 'Courier New', Courier, monospace;
             color: #d63384;
         }
         pre code {
-            color: #333;
+            color: #dcdcdc;
         }
         img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
             margin: 20px 0;
-            border: 1px solid #eee;
+            border: 1px solid #333;
         }
         .note {
             background-color: #025895;
@@ -34,12 +35,17 @@
             padding: 10px 15px;
             margin: 15px 0;
             font-style: italic;
+            color: #fff;
         }
-	.center {
-	    display: block;
-	    margin-left: auto;
-	    margin-right: auto;
-	}
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .indent-list {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -73,9 +79,9 @@
                         <li><strong>Family Access:</strong> Accessible from any phone or laptop in the house.</li>
                     </ul>
 
-		    <br>
+                    <br>
 
-			<h2>Here is how I built it using <strong>Lemonade</strong>, <strong>Open WebUI</strong>, and <strong>Lemonade Control Panel</strong> (an Open WebUI plugin) to tie it all together.</h2>
+                    <h2>Here is how I built it using <strong>Lemonade</strong>, <strong>Open WebUI</strong>, and <strong>Lemonade Control Panel</strong> (an Open WebUI plugin) to tie it all together.</h2>
 
                     <img src="images/lemonade-architecture.png" alt="Diagram showing Lemonade Server connecting to Open WebUI and Mobile Apps">
 
@@ -97,13 +103,26 @@
 
                     <h3>Step 2: The Frontend (Open WebUI)</h3>
 
-                    <p>Open WebUI is the best interface out there. It looks and feels exactly like ChatGPT, supports user accounts, and handles history beautifully. We'll run this via Docker.</p>
+                    <p>Open WebUI is the best interface out there. It looks and feels exactly like ChatGPT, supports user accounts, and handles history beautifully.</p>
+                    
+                    <p>While Open WebUI supports various installation methods, including Python <code>uv</code>, building from source, and Kubernetes Helm charts—we will use <strong>Docker</strong> for this guide as it's the cleanest way to get started without polluting your system dependencies.</p>
 
                     <pre><code>docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main</code></pre>
 
-                    <p>Once running at <code>http://localhost:3000</code>, I connected it to Lemonade:</p>
+                    <p>Once running at <code>http://localhost:3000</code>, you need to connect it to Lemonade. Recently, Lemonade added support for the <strong>Ollama API</strong> as an alternative to the standard OpenAI-compatible endpoint. This gives you two distinct ways to configure your backend.</p>
+
+                    <h4>Option A: The Ollama Connection (Recommended for Management)</h4>
+                    <p>Since Open WebUI supports the Ollama API natively, and Lemonade now supports it too, you can connect them to unlock full model management features.</p>
+                    <p>By selecting this option, you can use the native <strong>Settings > Models</strong> interface in Open WebUI to search, pull, and delete models installed on your Lemonade server—just like you would with a standard Ollama instance.</p>
                     <ol class="indent-list">
-                        <li>Go to <strong>Settings > Admin Settings > Connections</strong>.</li>
+                        <li>Go to <strong>Settings > Admin Settings > Connections > Ollama</strong>.</li>
+                        <li>Set the Ollama API URL to <code>http://host.docker.internal:11434</code>.</li>
+                    </ol>
+
+                    <h4>Option B: The OpenAI Connection</h4>
+                    <p>Alternatively, you can use the standard OpenAI-compatible endpoint. This is robust for chat and image generation, but it lacks the native "Model Management" UI described above.</p>
+                    <ol class="indent-list">
+                        <li>Go to <strong>Settings > Admin Settings > Connections > OpenAI</strong>.</li>
                         <li>Set the OpenAI API URL to <code>http://host.docker.internal:8000/api/v1</code>.</li>
                     </ol>
 
@@ -111,17 +130,21 @@
 
                     <h3>Step 3: The Lemonade Control Panel Plugin</h3>
 
-                    <p>This was the missing piece. I didn't want to SSH into my server to check if a model was loaded or to see my NPU usage stats. I wanted to control the server directly from the chat interface.</p>
+                    <p>Regardless of which API connection you chose in Step 2, standard Open WebUI doesn't show you low-level system stats. I wanted a telemetry snapshot to see exactly how my hardware was performing.</p>
 
-                    <p>I wrote a plugin for Open WebUI called <strong>Lemonade Control Panel</strong>. It gives you a visual snapshot of your server's health, token speeds, and loaded models. It even lets you <code>pull</code> or <code>delete</code> models via chat commands.</p>
+                    <p>I wrote a plugin called <strong>Lemonade Control Panel</strong>. It provides a visual <strong>snapshot view</strong> of your server's health, including system info, RAM health and Token/Sec speeds.</p>
+
+                    <p><strong>Universal Compatibility:</strong> You can use this plugin with <em>either</em> API option.</p>
+
+                    <p>However, if you chose the <strong>OpenAI Connection (Option B)</strong>, this plugin is especially useful. Since that API option lacks native model management in the UI, this plugin enables <code>pull</code> and <code>delete</code> commands directly within the chat window.</p>
 
                     <img src="images/lemonade-dashboard.png" alt="Screenshot of the Lemonade Control Panel Dashboard with gauges and stats" class="center">
 
-		    <p>To install it, go to <a href="https://openwebui.com/posts/lemonade_control_panel_a5ee89f2" target="_blank">the plugin's community page</a>, click on "Get", then on "Save". After you have successfully imported the plugin, be sure to enable it in the "Functions" setting.</p>
+                    <p>To install it, go to <a href="https://openwebui.com/posts/lemonade_control_panel_a5ee89f2" target="_blank">the plugin's community page</a>, click on "Get", then on "Save". After you have successfully imported the plugin, be sure to enable it in the "Functions" setting.</p>
 
                     <img src="images/enable-plugin.png" alt="Screenshot of the process of enabling lemonade control panel plugin" class="center">
 
-		<p>Now that you've installed the plugin, you are ready to start using it! Open a new chat session and look for the "Lemonade Control Panel" button (screenshot attached below).</p>
+                    <p>Now that you've installed the plugin, you are ready to start using it! Open a new chat session and look for the "Lemonade Control Panel" button.</p>
 
                     <img src="images/chat-plugin.png" alt="Screenshot of the plugin button" class="center">
                     
@@ -150,6 +173,16 @@
                     <p class="note"><strong>Firewall Check:</strong> If your phone can't connect, check the Windows Firewall (or <code>ufw</code> on Linux) on your server PC. You need to allow inbound traffic on ports <strong>8000</strong> (for the App) and <strong>3000</strong> (for WebUI).</p>
 
                     <p>And that's it! You now have a private, powerful AI cloud running entirely locally.</p>
+
+                    <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+                    <h3>Documentation & Resources</h3>
+                    <p>If you want to dive deeper into advanced configurations, check out the official docs:</p>
+                    <ul class="indent-list">
+                        <li><a href="https://lemonade-server.ai/docs/" target="_blank">Lemonade Server Documentation</a></li>
+                        <li><a href="https://docs.openwebui.com/" target="_blank">Open WebUI Documentation</a></li>
+                    </ul>
+
                 </div>
             </article>
             <a href="/blog" class="back-link">← All Posts</a>
