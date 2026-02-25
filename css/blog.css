@@ -90,11 +90,18 @@ a:hover {
     display: inline-block;
     margin-top: 3rem;
 }
-.indent-list {
-  padding-left: 40px; /* Adjust the value as needed */
-}
 
 .pdf-viewer {
     border: none;
     margin-top: 1rem;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.indent-list {
+    margin-left: 40px;
+    margin-bottom: 20px;
 }

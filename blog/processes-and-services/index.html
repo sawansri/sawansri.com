@@ -35,7 +35,7 @@
 			<p>A process has one or more threads.</p>
 			<p>Processes have their own data and code, must use pipes, files, etc. to communicate with one another.
 			Threads share the same process but have different system states (“multithreaded process”)</p>
-						<img src="images/thread.png"></img>
+						<img src="images/thread.png" class="center"></img>
                     <h3>What Defines a Process?</h3>
                     <p>Every process has several key identifiers and components:</p>
                     <ul class="indent-list">
@@ -47,20 +47,20 @@
                     </ul>
                     <p>All processes are started by a parent process, with the exception of the very first one: the <strong>init process</strong>. This process is started at boot, is assigned PID 1, and serves as the ancestor for all other processes on the system.</p>
 
-						<img src="images/htop_tree.png"></img>
+						<img src="images/htop_tree.png" class="center"></img>
 
                     <h3>Process Creation: The `fork()` and `exec()` System Calls</h3>
                     <p>A new process is created when an existing process calls `fork()`. This creates two processes, a parent and a child, which are nearly identical. The parent keeps its PID, while the child receives a new one. The child process can then optionally call `exec()` to replace its own program with a new one.</p>
-						<img src="images/fork.png"></img>
+						<img src="images/fork.png" class="center"></img>
 						<br><br>
 						<h3>How many henlo's get printed?</h3>
 						<br><br>
-						<img src="images/henlo_fork.png"></img>
+						<img src="images/henlo_fork.png" class="center"></img>
                     <h3>The Process Lifecycle: Zombies and Orphans</h3>
                     <p>When a child process terminates, it becomes a <strong>zombie process</strong>. Its metadata remains in the process table so its parent can read its exit status. The parent is responsible for "reaping" the zombie by calling the `wait()` system call. If a long-running parent process fails to do this, it can cause a resource leak as zombies accumulate.</p>
-						<img src="images/zombie.png"></img>
+						<img src="images/zombie.png" class="center"></img>
                     <p>If a parent process exits before its child, the child becomes an <strong>orphan process</strong>. Orphaned processes are immediately adopted by the init process (PID 1), which automatically reaps them when they exit, preventing them from becoming permanent zombies.</p>
-						<img src="images/re-init.png"></img>
+						<img src="images/re-init.png" class="center"></img>
 
 		<br><br>
 			<h3>Communication</h3>
@@ -108,7 +108,7 @@
 			<p>Service behavior defined by systemd unit files
 			How should this service start up? How should it respond to various systemctl management commands?
 </p>
-						<img src="images/service.png"></img>
+						<img src="images/service.png" class="center"></img>
                     
                     <h3>Essential `systemctl` Commands</h3>
                     <p>You can control any service managed by systemd with these commands:</p>
