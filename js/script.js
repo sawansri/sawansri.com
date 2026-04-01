@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const href = this.getAttribute('href');
 
-            // --- THIS IS THE FIX ---
-            // Only run smooth-scroll for internal anchor links (e.g., "#resume")
+            // Only run smooth-scroll for internal anchor links
             if (href.startsWith('#')) {
                 e.preventDefault();
                 
