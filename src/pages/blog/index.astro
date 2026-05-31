@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import SiteHeader from "../../components/SiteHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+---
+
+<BaseLayout title="Blog | Sawan Srivastava" description="Writing by Sawan Srivastava.">
+  <div class="container">
+    <SiteHeader active="blog" />
+
+    <main>
+      <h1 class="page-title">Blog</h1>
+      <div id="post-list">
+        {
+          posts.map((post) => (
+            <article class="post-preview">
+              <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+              <p class="post-meta">{formatDate(post.data.pubDate)}</p>
+              <p class="post-description">{post.data.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</BaseLayout>
