@@ -1,0 +1,17 @@
+---
+interface Props {
+  active?: "home" | "blog";
+}
+
+const { active } = Astro.props;
+---
+
+<header class="main-header">
+  <div class="logo"><a href="/">Sawan Srivastava</a></div>
+  <nav class="main-nav" aria-label="Primary navigation">
+    <ul>
+      <li><a href="/" class:list={[{ active: active === "home" }]}>Home</a></li>
+      <li><a href="/blog/" class:list={[{ active: active === "blog" }]}>Blog</a></li>
+    </ul>
+  </nav>
+</header>

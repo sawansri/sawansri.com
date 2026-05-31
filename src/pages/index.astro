@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import SiteHeader from "../components/SiteHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import heroImage from "../assets/images/DSC06951.jpg";
+
+const friends = [
+  { href: "https://chenghao.li/", src: "/images/friends/chenghao.png", alt: "Chenghao's Website" },
+  { href: "https://joewang.me/", src: "/images/friends/joe.png", alt: "Joe's Website" },
+  { href: "https://minasonmez.com/", src: "/images/friends/mina.gif", alt: "Mina's Website" },
+  { href: "https://jaysa.net/", src: "/images/friends/jaysa.png", alt: "Jaysa's Website" },
+  { href: "https://erdaifuu.com/", src: "/images/friends/carl.gif", alt: "Carl's Website" },
+  { href: "https://lukegonsalves.com/", src: "/images/friends/luke.png", alt: "Luke's Website" },
+  { href: "https://decal.ocf.berkeley.edu/", src: "/images/friends/ocfdecal.png", alt: "OCF DeCal" },
+  { href: "https://ocf.berkeley.edu/", src: "/images/friends/ocf.png", alt: "OCF" },
+];
+
+const socials = [
+  { href: "mailto:sawan_srivastava@berkeley.edu", src: "/images/message.png", alt: "Email" },
+  { href: "https://github.com/sawansri", src: "/images/github.svg", alt: "GitHub" },
+  { href: "https://linkedin.com/in/sawan-s", src: "/images/linkedin.svg", alt: "LinkedIn" },
+];
+---
+
+<BaseLayout title="Sawan's Site" bodyClass="home-page">
+  <div class="main-layout">
+    <div class="image-left">
+      <Image
+        src={heroImage}
+        alt=""
+        class="image-left-image"
+        width={1280}
+        height={2274}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        loading="eager"
+      />
+    </div>
+
+    <div class="content-right">
+      <SiteHeader active="home" />
+
+      <main>
+        <section id="home">
+          <h1>Welcome!</h1>
+          <h3>
+            I'm Sawan, a Data Science student at
+            <a href="https://www.berkeley.edu/" target="_blank" rel="noreferrer">UC Berkeley</a>!
+          </h3>
+        </section>
+
+        <section id="work">
+          <h3>
+            This summer I interned at <a href="https://aws.amazon.com" target="_blank" rel="noreferrer">AWS</a>
+            where I worked on <a href="https://www.opensearch.org/" target="_blank" rel="noreferrer">OpenSearch</a>,
+            a distributed search engine.
+          </h3>
+          <h3>
+            My project involved optimizing query performance, specifically for Term and Boolean Queries, the most common
+            types of queries in OpenSearch. Read more about my project and the approximation framework on this
+            <a href="https://opensearch.org/blog/opensearch-approximation-framework/" target="_blank" rel="noreferrer">blog</a>.
+          </h3>
+          <h3>
+            When I'm at Berkeley, I'm involved at the
+            <a href="https://ocf.berkeley.edu" target="_blank" rel="noreferrer">Open Computing Facility</a>
+            where I'm the Head Instructor of the
+            <a href="https://decal.ocf.berkeley.edu" target="_blank" rel="noreferrer">Linux SysAdmin DeCal</a>.
+          </h3>
+        </section>
+
+        <section id="friends" class="button-grid-section">
+          <h2>Buddy Box</h2>
+          <div class="button-grid">
+            {
+              friends.map((friend) => (
+                <a href={friend.href} target="_blank" rel="noreferrer" class="button-88x31">
+                  <img src={friend.src} alt={friend.alt} loading="lazy" />
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        <section id="socials">
+          <h2>Socials</h2>
+          <div class="social-links">
+            {
+              socials.map((social) => (
+                <a href={social.href} target="_blank" rel="noreferrer">
+                  <img src={social.src} alt={social.alt} loading="lazy" />
+                </a>
+              ))
+            }
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
