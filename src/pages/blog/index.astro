@@ -17,22 +17,38 @@ const formatDate = (date: Date) =>
 ---
 
 <BaseLayout title="Blog | Sawan Srivastava" description="Writing by Sawan Srivastava.">
-  <div class="container">
+  <div class="container blog-container">
     <SiteHeader active="blog" />
 
-    <main>
-      <h1 class="page-title">Blog</h1>
-      <div id="post-list">
+    <main class="blog-index">
+      <header class="archive-header">
+        <div>
+          <p class="archive-kicker">Writing</p>
+          <h1 class="page-title">Blog</h1>
+        </div>
+        <a class="archive-rss" href="/rss.xml">RSS</a>
+      </header>
+
+      <ol id="post-list" class="post-list" aria-label="Blog posts">
         {
           posts.map((post) => (
-            <article class="post-preview">
-              <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
-              <p class="post-meta">{formatDate(post.data.pubDate)}</p>
-              <p class="post-description">{post.data.description}</p>
-            </article>
+            <li>
+              <article class="post-preview">
+                <time class="post-date" datetime={post.data.pubDate.toISOString()}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <div class="post-preview-body">
+                  <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+                  <p class="post-description">{post.data.description}</p>
+                </div>
+                <a class="post-read-link" href={`/blog/${post.id}/`} aria-label={`Read ${post.data.title}`}>
+                  Read
+                </a>
+              </article>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </main>
   </div>
 </BaseLayout>
