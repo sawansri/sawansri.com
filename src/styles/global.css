@@ -203,6 +203,11 @@ h3 {
     min-height: 2rem;
 }
 
+.divider-link {
+    display: block;
+    line-height: 0;
+}
+
 .divider-image {
     display: block;
     width: min(15rem, 56vw);
